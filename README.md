@@ -25,6 +25,24 @@
 
 ### 使用说明
 
+
+# PDF 处理工具集依赖库
+# 适用于 拆分pdf.py 和 Qwen_T.py
+
+# PDF 处理相关
+PyPDF2>=3.0.0
+pdf2image>=1.16.0
+Pillow>=9.0.0
+
+# 数据处理
+pandas>=1.5.0
+
+# AI 识别相关
+dashscope>=1.20.0
+
+# 系统工具
+requests>=2.28.0
+
 #### 1. 安装依赖
 
 ```bash
@@ -35,6 +53,18 @@ pip install PyPDF2
 
 打开 `拆分pdf.py`，找到文件末尾的配置区：
 
+第一步：安装依赖
+pip install -r requirements.txt
+第二步：配置程序
+编辑 .env 文件，修改三个关键配置：
+DASHSCOPE_API_KEY=你的API密钥
+INPUT_PDF_DIR=你的PDF文件夹路径  
+POPPLER_PATH=你的Poppler工具路径
+第三步：验证配置
+python config_loader.py
+第四步：开始使用
+python 拆分pdf.py    # PDF拆分
+python Qwen_T.py 
 ```python
 if __name__ == "__main__":
     # 修改为你的PDF文件路径

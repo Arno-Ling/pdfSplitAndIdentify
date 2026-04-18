@@ -142,23 +142,18 @@ def extract_side_data(image_path, side):
         "你是工业目录数据提取助手。请观察这张图片并提取数据：\n"
         f"0. 这是一页文档的{side_desc}，仅提取这张图中的数据。\n"
         "1. 提取 Catalog No. 区块中 Type 列所有值。如果没有Type，就只提取Catalog No.下的所有值。\n"
-            "a. 注意不要提取页眉页脚上的Catalog No。\n"
+            "a. 注意不要提取页眉页脚上的Catalog No.后面的内容。\n"
             "b. 提取时注意'-'的提取，不要缺失。\n"
-            "c. 读取时可能会有重复的，进行去重，删除时删除后出现的值，但是保留空位。\n"
+            "c. 如有重复值，只保留第一次出现的。\n"
         "2. 提取追加工区块中 Code 列所有值（蓝色加粗字）。\n"
-            "a. 追加工的内容整体单独拿出一行来储存，不要在每个值后面都添加一遍。\n"
-            "b. 追加工的内容每个值单独成列"
+            "a. 追加工的内容整体单独拿出一行来储存，不要在每个值后面都添加一遍，里面的值都用双引号包围。\n"
         "3. 不要提取件名，不要输出说明文字。\n"
         "4. 若某项不存在，返回空数组。\n"
-        "5. 输出案例如下：\n"
-        ",追加工,RLC, ","PC, ","BC,"," YC, ","PKC, ","PKV, ","SC, ","LC, ","WKD, ","UK,", "RTC \n"
-        "Catalog No.,"
-        "B-WKSTAS,"
-        "B-WKSTAL,"
-        "B-WKTPAS,"
-        "B-WKTPAL,"
+        "5. 不要读订货范例区块后的Catalog No.后的内容。"
         "请严格输出 JSON，不要 Markdown：\n"
-        '{"catalog_types": ["A", "B"], "additional_codes": ["LKC", "LJ2"]}'
+        # "输出案例如下：\n"
+        # '{"additional_codes": ["RLC", "PC", "BC", "YC", "PKC", "PKV", "SC", "LC", "WKD", "UK", "RTC"], "catalog_types": ["B-WKSTAS", "B-WKSTAL", "B-WKTPAS", "B-WKTPAL"]}\n'
+        # '{"catalog_types": ["A", "B"], "additional_codes": ["LKC", "LJ2"]}'
     )
     result = _call_qwen_json(image_path, prompt)
     if not isinstance(result, dict):
