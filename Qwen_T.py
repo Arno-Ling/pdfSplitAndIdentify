@@ -11,9 +11,9 @@ from dashscope import MultiModalConversation
 dashscope.api_key = "sk-06f89b86d978492686de2224814ee1ba"
 
 # 2. 设置文件夹路径
-INPUT_PDF_DIR = r"C:\Users\Arno\Desktop\External_database_organization\databaseAfterSplit"   # 存放原始 PDF 的文件夹
-OUTPUT_CSV_DIR = "material_extraction_report.csv" # CSV 输出文件夹
-OUTPUT_PDF_DIR = "./dataBaseAfterIdentify" # 处理后 PDF 输出文件夹
+INPUT_PDF_DIR = r"C:\Users\Arno\Desktop\External_database_organization\databaseAfterSplit"  # 存放原始 PDF 的文件夹
+OUTPUT_CSV_DIR = "./output_csv"  # CSV 输出文件夹
+OUTPUT_PDF_DIR = "./output_pdf"  # 处理后 PDF 输出文件夹
 POPPLER_PATH = r"C:\Users\Arno\Desktop\External_database_organization\supportRely\poppler-25.12.0\Library\bin"
 
 # 如果文件夹不存在则创建
@@ -141,10 +141,22 @@ def extract_side_data(image_path, side):
     prompt = (
         "你是工业目录数据提取助手。请观察这张图片并提取数据：\n"
         f"0. 这是一页文档的{side_desc}，仅提取这张图中的数据。\n"
-        "1. 提取 Catalog No 区块中 Type 列所有值。\n"
+        "1. 提取 Catalog No. 区块中 Type 列所有值。如果没有Type，就只提取Catalog No.下的所有值。\n"
+            "a. 注意不要提取页眉页脚上的Catalog No。\n"
+            "b. 提取时注意'-'的提取，不要缺失。\n"
+            "c. 读取时可能会有重复的，进行去重，删除时删除后出现的值，但是保留空位。\n"
         "2. 提取追加工区块中 Code 列所有值（蓝色加粗字）。\n"
+            "a. 追加工的内容整体单独拿出一行来储存，不要在每个值后面都添加一遍。\n"
+            "b. 追加工的内容每个值单独成列"
         "3. 不要提取件名，不要输出说明文字。\n"
         "4. 若某项不存在，返回空数组。\n"
+        "5. 输出案例如下：\n"
+        ",追加工,RLC, ","PC, ","BC,"," YC, ","PKC, ","PKV, ","SC, ","LC, ","WKD, ","UK,", "RTC \n"
+        "Catalog No.,"
+        "B-WKSTAS,"
+        "B-WKSTAL,"
+        "B-WKTPAS,"
+        "B-WKTPAL,"
         "请严格输出 JSON，不要 Markdown：\n"
         '{"catalog_types": ["A", "B"], "additional_codes": ["LKC", "LJ2"]}'
     )
