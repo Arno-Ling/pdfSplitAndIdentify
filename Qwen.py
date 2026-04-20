@@ -147,11 +147,11 @@ def extract_side_data(image_path, side):
         "2. 提取追加工区块中 Code 列所有值（蓝色加粗字）。\n"
         "3. 不要提取件名，不要输出说明文字。\n"
         "4. 若某项不存在，返回空数组。\n"
-        "5. 不要读订货范例区块后的Catalog No.后的内容。"
+        "5. 如果Catalog No. 区块中 Type 列所有值有数字，那么不进行提取"
+        # "5. 不要读订货范例区块的内容。"
         "请严格输出 JSON，不要 Markdown：\n"
         # "输出案例如下：\n"
-        # '{"additional_codes": ["RLC", "PC", "BC", "YC", "PKC", "PKV", "SC", "LC", "WKD", "UK", "RTC"], "catalog_types": ["B-WKSTAS", "B-WKSTAL", "B-WKTPAS", "B-WKTPAL"]}\n'
-        # '{"catalog_types": ["A", "B"], "additional_codes": ["LKC", "LJ2"]}'
+        '{,"catalog_types": ["A", "B"], "additional_codes": ["LKC", "LJ2"]}'
     )
     result = _call_qwen_json(image_path, prompt)
     if not isinstance(result, dict):

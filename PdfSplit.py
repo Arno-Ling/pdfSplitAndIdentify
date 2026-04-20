@@ -8,7 +8,7 @@ def split_pdf_by_range(input_pdf_path, output_pdf_path, start_page, end_page):
     :param output_pdf_path: 输出PDF路径
     :param start_page: 起始页码（从1开始）
     :param end_page: 结束页码（包含）
-    """
+    """ 
     try:
         # 读取原PDF
         reader = PdfReader(input_pdf_path)
@@ -96,13 +96,13 @@ def split_pdf_every_n_pages(input_pdf_path, output_folder="pdf_split_10", chunk_
 
 # ====================== 你只需要修改这里 ======================
 if __name__ == "__main__":
-    INPUT_PDF = "导正销.pdf"
+    INPUT_PDF = "氮气弹簧.pdf"
 
     # split_pdf_by_range(
     #     input_pdf_path=INPUT_PDF,
-    #     output_pdf_path="all_user.pdf",
-    #     start_page=295,
-    #     end_page=303
+    #     output_pdf_path="检查夹具用零件.pdf",
+    #     start_page=809,
+    #     end_page=816
     # )
     split_pdf_single_pages(INPUT_PDF, output_folder="databaseAfterSplit")
     # split_pdf_every_n_pages(INPUT_PDF, output_folder="pdf_split_10", chunk_size=10)
